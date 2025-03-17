@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Brugeroplysninger</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <form action="/submitUser" method="post">
-      <fieldset>
-        <legend>Demografi</legend>
-        <!-- Alder -->
-        <label for="alder">Hvad er din alder?</label>
-        <input type="number" id="alder" name="alder" min="18" required />
-        <br /><br />
-        <!-- Køn -->
-        <label for="køn">Hvad er dit køn?</label>
-        <select id="køn" name="køn">
-          <option value="kvinde">Kvinde</option>
-          <option value="mand">Mand</option>
-          <option value="andet">Andet</option>
-        </select>
-        <br /><br />
-        <!-- Uddannelse -->
-        <label for="uddannelse"
-          >Hvad er din højeste uddannelsesniveau som du har afsluttet eller er i
-          gang med?</label
-        >
-        <select id="uddannelse" name="uddannelse">
-          <option value="folkeskole">Folkeskole</option>
-          <option value="erhvervsuddannelse">Erhvervsuddannelse</option>
-          <option value="hf/hhx/htx/stx">HF/HHX/HTX/STX</option>
-          <option value="erhversakademiuddannelse">
-            Erhvervsakademiuddannelse
-          </option>
-          <option value="professionsbachelor">Professionsbachelor</option>
-          <option value="bachelor">Bachelor</option>
-          <option value="kandidat/master">Kandidat/Master</option>
-          <option value="ph.d.">Ph.D.</option>
-        </select>
-        <br /><br />
-        <!-- Beskæftigelse -->
-        <label for="beskæftigelse"
-          >Hvad er din aktuelle beskæftigelse eller din sidste beskæftigelse,
-          hvis du er uden for arbejdsmarkedet?</label
-        >
-        <textarea id="beskæftigelse" name="beskæftigelse"></textarea>
-        <br /><br />
 
-        <button type="submit">Send</button>
-      </fieldset>
-    </form>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brugeroplysninger</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <form>
+    <fieldset>
+      <legend>Demografi</legend>
+      <!-- Alder -->
+      <label for="alder">Hvad er din alder?</label>
+      <input type="number" id="alder" name="alder" min="18" required />
+      <br /><br />
+      <!-- Køn -->
+      <label for="køn">Hvad er dit køn?</label>
+      <select id="køn" name="køn">
+        <option value="kvinde">Kvinde</option>
+        <option value="mand">Mand</option>
+        <option value="andet">Andet</option>
+      </select>
+      <br /><br />
+      <!-- Uddannelse -->
+      <label for="uddannelse">Hvad er din højeste uddannelsesniveau som du har afsluttet eller er i
+        gang med?</label>
+      <select id="uddannelse" name="uddannelse">
+        <option value="folkeskole">Folkeskole</option>
+        <option value="erhvervsuddannelse">Erhvervsuddannelse</option>
+        <option value="hf/hhx/htx/stx">HF/HHX/HTX/STX</option>
+        <option value="erhversakademiuddannelse">
+          Erhvervsakademiuddannelse
+        </option>
+        <option value="professionsbachelor">Professionsbachelor</option>
+        <option value="bachelor">Bachelor</option>
+        <option value="kandidat/master">Kandidat/Master</option>
+        <option value="ph.d.">Ph.D.</option>
+      </select>
+      <br /><br />
+      <!-- Beskæftigelse -->
+      <label for="beskæftigelse">Hvad er din aktuelle beskæftigelse eller din sidste beskæftigelse,
+        hvis du er uden for arbejdsmarkedet?</label>
+      <textarea id="beskæftigelse" name="beskæftigelse"></textarea>
+      <br /><br />
+
+      <button type="submit">Send</button>
+    </fieldset>
+  </form>
+  <script src="script.js"></script>
+</body>
+
 </html>
