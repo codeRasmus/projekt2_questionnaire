@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Insert Demografi form
-function insertDemografiFromXML() {
+function insertDemografiFormFromXML() {
   fetch("spørgeskema.xml")
     .then((response) => response.text())
     .then((xmlText) => {
@@ -115,7 +115,7 @@ function insertUndersøgelseForm() {
 
       // Create form
       const form = document.createElement("form");
-      form.setAttribute("action", "../submitQuestionnaire");
+      form.setAttribute("action", "../submitAnswer");
       form.setAttribute("method", "post");
 
       const fieldset = document.createElement("fieldset");
