@@ -4,22 +4,61 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Page1</title>
+    <link rel="stylesheet" href="style.css" />
     <style>
+      * {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
       body {
-        background-size: cover;
-        background-repeat: no-repeat;
-        /* background-image: url("images/Skærmbillede\ 2025-03-17\ kl.\ 08.52.22.png"); */
-        width: 100vw;
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
+        flex-direction: column;
         height: 100vh;
       }
+
+      h1 {
+        text-align: center;
+      }
+
       form {
-        border-radius: 20px;
-        width: 80vw;
-        height: 90vh;
-        background-color: #e7e7e7;
+        display: flex;
+        justify-content: center;
+      }
+
+      fieldset {
+        margin: 0;
+        padding: 20px;
+        display: inline;
+        font-style: sans-serif;
+        width: 800px;
+      }
+
+      fieldset div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      fieldset label {
+        margin: 10px 0;
+      }
+
+      fieldset div label {
+        margin: 20px 5px;
+        display: flex;
+      }
+      form button {
+        background-color: #c33afe;
+        color: white;
+        border: none;
+        padding: 10px 40px;
+        font-weight: 600;
+        font-size: 1.8rem;
+        border-radius: 50px;
+        text-align: center;
+        cursor: pointer;
       }
     </style>
   </head>
