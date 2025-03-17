@@ -25,8 +25,8 @@ function insertDemografiFormFromXML() {
 
       // Create form
       const form = document.createElement("form");
-      form.setAttribute("action", "../submitUser");
-      form.setAttribute("method", "post");
+      // form.setAttribute("action", "../submitUser");
+      // form.setAttribute("method", "post");
 
       // Create fieldset for Demografi
       const fieldset = document.createElement("fieldset");
@@ -88,13 +88,14 @@ function insertDemografiFormFromXML() {
 
       // Submit button
       const submitButton = document.createElement("button");
-      submitButton.setAttribute("type", "submit");
+      // submitButton.setAttribute("type", "submit");
       submitButton.textContent = "Send";
       fieldset.appendChild(submitButton);
 
       // Append everything to the form and then to the body
       form.appendChild(fieldset);
       document.body.appendChild(form);
+      submitButton.addEventListener("click", submitUser);
     })
     .catch((error) => console.error("Error loading XML:", error));
 }
@@ -214,5 +215,45 @@ function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+  }
+}
+function getPersistentId() {
+  let runNr = localStorage.getItem("runNr");
+  if (!runNr) {
+    runNr = crypto.randomUUID();
+    localStorage.setItem("runNr", runNr);
+  }
+  return runNr;
+}
+
+async function submitUser(event) {
+  event.preventDefault(); // Prevent standard GET request
+  console.log("Submitting user data...");
+  const userData = {
+    alder: document.getElementById("alder").value,
+    køn: document.getElementById("køn").value,
+    uddannelse: document.getElementById("uddannelse").value,
+    beskæftigelse: document.getElementById("beskæftigelse").value,
+    runNr: getPersistentId(),
+  };
+  console.log("User data:", userData);
+
+  try {
+    const response = await fetch("http://localhost:3000/submitUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (response.ok) {
+      // Håndter redirect ved at følge serverens anvisning
+      window.location.href = "page1.html";
+    } else {
+      console.error("Error: Server responded with status", response.status);
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
   }
 }
