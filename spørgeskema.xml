@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spørgeskema>
+  <spørgsmålsgruppe>
+    <id>demografi</id>
+    <tilfældigRækkefølge>false</tilfældigRækkefølge>
+    <spørgsmål>
+			<id>alder</id>
+      <type>integer</type>
+      <obligatorisk>true</obligatorisk>
+      <tekst>Hvad er din alder?</tekst>
+      <min>18</min>
+    </spørgsmål>
+    <spørgsmål>
+			<id>køn</id>
+      <type>dropdown</type>
+      <obligatorisk>true</obligatorisk>
+      <tekst>Hvad er dit køn?</tekst>
+      <option>kvinde</option>
+      <option>mand</option>
+      <option>andet</option>
+    </spørgsmål>
+    <spørgsmål>
+			<id>uddannelse</id>
+      <type>dropdown</type>
+      <obligatorisk>true</obligatorisk>
+      <tekst>Hvad er din højeste uddannelsesniveau som du har afsluttet eller er i gang med?</tekst>
+      <option>folkeskole</option>
+      <option>erhvervsuddannelse</option>
+      <option>hf/hhx/htx/stx</option>
+      <option>erhversakademiuddannelse</option>
+      <option>professionsbachelor</option>
+      <option>bachelor</option>
+      <option>kandidat/master</option>
+      <option>ph.d.</option>
+    </spørgsmål>
+    <spørgsmål>
+			<id>beskæftigelse</id>
+      <type>tekst</type>
+      <obligatorisk>true</obligatorisk>
+      <tekst>Hvad er din aktuelle beskæftigelse eller din sidste beskæftigelse hvis du er uden for arbejdsmarkedet?</tekst>
+    </spørgsmål>
+  </spørgsmålsgruppe>
+  <spørgsmålsgruppe>
+    <id>undersøgelse</id>
+    <tilfældigRækkefølge>true</tilfældigRækkefølge>
+    <spørgsmål>
+			<id>1</id>
+      <type>skala</type><!-- Preambel: På en skala fra 1 til ${niveauer}, hvor 1 er lavest, -->
+      <niveauer>6</niveauer>
+      <tekst>Hvor tiltalende finder du siden i sin helhed?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+			<id>2</id>
+      <type>skala</type>
+      <niveauer>6</niveauer>
+      <tekst>Hvor tiltalende finder du sidens opsætning?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+			<id>3</id>
+      <type>skala</type>
+      <niveauer>6</niveauer>
+      <tekst>Hvor tiltalende finder du billederne på siden?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+			<id>4</id>
+      <type>skala</type>
+      <niveauer>6</niveauer>
+      <tekst>Hvor tiltalende finder du sidens sproglige indhold?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+			<id>5</id>
+      <type>skala</type>
+      <niveauer>6</niveauer>
+      <tekst>Hvor tiltalende finder du farverne på siden?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+			<id>6</id>
+      <type>skala</type>
+      <niveauer>6</niveauer>
+      <tekst>Hvor sandsynligt er det at du ville benytte dig af virksomhedens produkter?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+			<id>7</id>
+      <type>tekst</type>
+      <tekst>Skriv op til 5 tillægsord som du synes beskriver siden</tekst>
+    </spørgsmål>
+    <spørgsmål>
+			<id>8</id>
+      <type>Lickert</type><!-- Hvor enig er du i følgende udsagn?: `Meget uenig - Uenig - ${niveauer===5?'hverken enig eller uenig':'Lidt uenig - Lidt enig'} - Enig - Meget enig -->
+      <niveauer>6</niveauer>
+      <tekst>Teksten på siden er stavet korrekt</tekst>
+    </spørgsmål>
+    <spørgsmål>
+			<id>9</id>
+      <type>Lickert</type>
+      <niveauer>6</niveauer>
+      <tekst>Teksten på siden er velformuleret</tekst>
+    </spørgsmål>
+    <spørgsmål>
+			<id>10</id>
+      <type>Lickert</type>
+      <niveauer>6</niveauer>
+      <tekst>Teksten på siden er letlæselig</tekst>
+    </spørgsmål>
+    <spørgsmål>
+			<id>11</id>
+      <type>Lickert</type>
+      <niveauer>6</niveauer>
+      <tekst>Ordene i teksten på siden er bøjet korrekt</tekst>
+    </spørgsmål>
+    <spørgsmål>
+			<id>12</id>
+      <type>Lickert</type>
+      <niveauer>6</niveauer>
+      <tekst>Det er let at forstå teksten på siden</tekst>
+    </spørgsmål>
+		<spørgsmål>
+			<id>13</id>
+			<type>Lickert</type>
+			<niveauer>6</niveauer>
+			<tekst>Teksten på siden er skrevet på en kringlet måde</tekst>
+		</spørgsmål>
+		<spørgsmål>
+			<id>14</id>
+			<type>Lickert</type>
+			<niveauer>6</niveauer>
+			<tekst>Virksomheden er tillidsvækkende</tekst>
+		</spørgsmål>
+		<spørgsmål>
+			<id>15</id>
+			<type>Lickert</type>
+			<niveauer>6</niveauer>
+			<tekst>De fleste kan godt lide denne hjemmeside</tekst>
+		</spørgsmål>
+</spørgeskema>
