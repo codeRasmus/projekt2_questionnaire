@@ -86,50 +86,51 @@
     </spørgsmål>
     <spørgsmål>
 			<id>8</id>
-      <type>Lickert</type><!-- Hvor enig er du i følgende udsagn?: `Meget uenig - Uenig - ${niveauer===5?'hverken enig eller uenig':'Lidt uenig - Lidt enig'} - Enig - Meget enig -->
+      <type>Likert</type><!-- Hvor enig er du i følgende udsagn?: `Meget uenig - Uenig - ${niveauer===5?'hverken enig eller uenig':'Lidt uenig - Lidt enig'} - Enig - Meget enig -->
       <niveauer>6</niveauer>
       <tekst>Teksten på siden er stavet korrekt</tekst>
     </spørgsmål>
     <spørgsmål>
 			<id>9</id>
-      <type>Lickert</type>
+      <type>Likert</type>
       <niveauer>6</niveauer>
       <tekst>Teksten på siden er velformuleret</tekst>
     </spørgsmål>
     <spørgsmål>
 			<id>10</id>
-      <type>Lickert</type>
+      <type>Likert</type>
       <niveauer>6</niveauer>
       <tekst>Teksten på siden er letlæselig</tekst>
     </spørgsmål>
     <spørgsmål>
 			<id>11</id>
-      <type>Lickert</type>
+      <type>Likert</type>
       <niveauer>6</niveauer>
       <tekst>Ordene i teksten på siden er bøjet korrekt</tekst>
     </spørgsmål>
     <spørgsmål>
 			<id>12</id>
-      <type>Lickert</type>
+      <type>Likert</type>
       <niveauer>6</niveauer>
       <tekst>Det er let at forstå teksten på siden</tekst>
     </spørgsmål>
 		<spørgsmål>
 			<id>13</id>
-			<type>Lickert</type>
+			<type>Likert</type>
 			<niveauer>6</niveauer>
 			<tekst>Teksten på siden er skrevet på en kringlet måde</tekst>
 		</spørgsmål>
 		<spørgsmål>
 			<id>14</id>
-			<type>Lickert</type>
+			<type>Likert</type>
 			<niveauer>6</niveauer>
 			<tekst>Virksomheden er tillidsvækkende</tekst>
 		</spørgsmål>
 		<spørgsmål>
 			<id>15</id>
-			<type>Lickert</type>
+			<type>Likert</type>
 			<niveauer>6</niveauer>
 			<tekst>De fleste kan godt lide denne hjemmeside</tekst>
 		</spørgsmål>
+    </spørgsmålsgruppe>
 </spørgeskema>
