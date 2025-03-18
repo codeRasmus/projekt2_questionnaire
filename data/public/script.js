@@ -28,6 +28,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
+let pagesArr = [
+    "page1.html",
+    "page2.html",
+    "page3.html",
+    "page4.html",
+    "page5.html",
+];
+
 function getPersistentId() {
     let runNr = localStorage.getItem("runNr");
     if (!runNr) {
@@ -158,39 +166,48 @@ function insertUndersøgelseForm() {
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(xmlText, "text/xml");
 
+            // Select the second spørgesmålsgruppe (Undersøgelse)
             const group = xmlDoc.querySelectorAll("spørgsmålsgruppe")[1]; // Get the second group
             if (!group) return;
 
-            // Opretter form (Uden action, så vi undgår navigation!)
+            // Create form
             const form = document.createElement("form");
-            form.setAttribute("id", "surveyForm"); // Tilføjer ID, så vi kan hente den senere
+            form.setAttribute("id", "surveyForm");
 
             const fieldset = document.createElement("fieldset");
 
-            const legend = document.createElement("legend");
-            legend.textContent = "Undersøgelse";
-            fieldset.appendChild(legend);
-
-            // Henter spørgsmål og randomiserer dem
+            // Get all questions in the second group
             const questions = Array.from(group.querySelectorAll("spørgsmål"));
+
+            // Shuffle the questions array
             shuffleArray(questions);
 
+            // Process shuffled questions
             questions.forEach((question) => {
                 const idElement = question.querySelector("id");
                 const typeElement = question.querySelector("type");
                 const labelTextElement = question.querySelector("tekst");
 
-                if (!idElement || !typeElement || !labelTextElement) return;
+                if (!idElement || !typeElement || !labelTextElement) {
+                    console.warn("Missing element in question, skipping...");
+                    return;
+                }
 
                 const id = idElement.textContent;
                 const type = typeElement.textContent;
                 const labelText = labelTextElement.textContent;
 
+                // Create div container for the question
+                const questionDiv = document.createElement("div");
+                questionDiv.classList.add("question_container");
+
+                // Create label
                 const label = document.createElement("label");
                 label.setAttribute("for", id);
                 label.textContent = labelText;
-                fieldset.appendChild(label);
+                questionDiv.appendChild(label);
 
+                // Create input element based on type
                 let inputElement;
                 if (type === "skala") {
                     inputElement = document.createElement("input");
@@ -218,19 +235,20 @@ function insertUndersøgelseForm() {
 
                 inputElement.setAttribute("id", id);
                 inputElement.setAttribute("name", id);
-                fieldset.appendChild(inputElement);
-                fieldset.appendChild(document.createElement("br"));
+                questionDiv.appendChild(inputElement);
+                fieldset.appendChild(questionDiv);  // Append the question div to the fieldset
             });
 
-            // Opret ny Submit-knap (uden default form submission)
+            // Submit button
             const submitButton = document.createElement("button");
+            console.log("created submit button");
             submitButton.textContent = "Send";
-            submitButton.addEventListener("click", submitSurvey); // Kalder fetch()
+            submitButton.addEventListener("click", submitSurvey);
 
+            // Append form to the body
             fieldset.appendChild(submitButton);
             form.appendChild(fieldset);
             document.body.appendChild(form);
-
             document.getElementById("showSurveyBtn").remove();
         })
         .catch((error) => console.error("Error loading XML:", error));
@@ -268,7 +286,7 @@ async function submitUser(event) {
 
         if (response.ok) {
             // Håndter redirect ved at følge serverens anvisning
-            window.location.href = "/page1.html";
+            nextPage();
         } else {
             console.error("Error: Server responded with status", response.status);
         }
@@ -303,7 +321,7 @@ async function submitSurvey(event) {
 
         if (response.ok) {
             const data = await response.json();
-            window.location.href = response.url;
+            nextPage();
         } else {
             console.error("❌ Fejl: Server svarede med status", response.status);
         }
@@ -313,14 +331,6 @@ async function submitSurvey(event) {
 }
 
 document.getElementById("nextBtn").addEventListener("click", nextPage);
-
-let pagesArr = [
-    "page1.html",
-    "page2.html",
-    "page3.html",
-    "page4.html",
-    "page5.html",
-];
 
 function nextPage() {
     let visitedPages = JSON.parse(localStorage.getItem("visitedPages")) || [];
