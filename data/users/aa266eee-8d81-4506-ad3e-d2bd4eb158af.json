@@ -1,8 +1,9 @@
 {
   "demografi": {
-    "alder": "20",
+    "alder": "22",
     "køn": "kvinde",
     "uddannelse": "folkeskole",
     "beskæftigelse": "hej"
-  }
+  },
+  "undersøgelser": {}
 }
