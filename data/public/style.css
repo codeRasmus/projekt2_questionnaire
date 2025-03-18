@@ -1,5 +1,45 @@
-form {
-  margin: 0;
-  padding: 0;
-  display: inline;
+* {
+  font-family: Arial, Helvetica, sans-serif;
 }
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#showSurveyBtn {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-image: url("images/review.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 20px;
+  position: absolute;
+  left: 100px;
+}
+
+button {
+  margin: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  background-color: grey;
+}
+
+/*
+
+fieldset {
+  margin: 0;
+  padding: 20px;
+  display: inline;
+  font-style: sans-serif;
+} */

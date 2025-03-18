@@ -1,0 +1,20 @@
+{
+  "demografi": {
+    "alder": "89",
+    "køn": "kvinde",
+    "uddannelse": "folkeskole",
+    "beskæftigelse": "pensionist"
+  },
+  "undersøgelser": {
+    "page1.html": {
+      "1": "5",
+      "2": "5",
+      "3": "5",
+      "4": "5",
+      "5": "5",
+      "6": "5",
+      "7": "",
+      "10": "3"
+    }
+  }
+}
