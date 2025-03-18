@@ -1,3 +1,15 @@
+document.addEventListener("DOMContentLoaded", () => { // Sikrer at DOM'en er loaded
+    console.log("DOM loaded, tilføjer event listener...");
+
+    const form = document.querySelector("form");
+    if (!form) {
+        console.error("Formularen blev ikke fundet i DOM'en!");
+        return;
+    }
+
+    form.addEventListener("submit", submitUser);
+});
+
 function getPersistentId() {
     let runNr = localStorage.getItem("runNr");
     if (!runNr) {
@@ -8,13 +20,25 @@ function getPersistentId() {
 }
 
 async function submitUser(event) {
-    const userData = {
-        alder: document.getElementById("alder").value,
-        køn: document.getElementById("køn").value,
-        uddannelse: document.getElementById("uddannelse").value,
-        beskæftigelse: document.getElementById("beskæftigelse").value,
-        runNr: getPersistentId()
-    };
+    event.preventDefault(); // 🚀 STOP standard GET-request!
+
+    console.log("DEBUG: submitUser() kaldt, event.preventDefault() eksekveret!");
+
+    // Test: Er eventet korrekt?
+    if (!event) {
+        console.error("❌ FEJL: event er ikke defineret!");
+        return;
+    }
+
+    // Hent formularværdier korrekt fra DOM
+    const alder = document.getElementById("alder").value;
+    const køn = document.getElementById("køn").value;
+    const uddannelse = document.getElementById("uddannelse").value;
+    const beskæftigelse = document.getElementById("beskæftigelse").value;
+    const runNr = getPersistentId();
+
+    // Test: Er værdierne korrekte?
+    console.log("DEBUG: Indsamlet brugerdata:", { alder, køn, uddannelse, beskæftigelse, runNr });
 
     try {
         const response = await fetch('http://localhost:3000/submitUser', {
@@ -22,26 +46,19 @@ async function submitUser(event) {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(userData)
+            body: JSON.stringify({ alder, køn, uddannelse, beskæftigelse, runNr })
         });
 
-        const contentType = response.headers.get("content-type");
+        console.log("DEBUG: Fetch anmodning sendt, venter på serverens svar...");
 
-        if (contentType && contentType.includes("application/json")) {
-            const json = await response.json();
-            console.log("Server response:", json);
-
-            if (json.redirect) {
-                window.location.href = json.redirect;
-            }
-        } else {
-            // Hvis det ikke er JSON, så log responsen
-            const text = await response.text();
-            console.error("Server returned non-JSON response:", text);
+        if (!response.ok) {
+            throw new Error(`❌ FEJL: Response status: ${response.status}`);
         }
+
+        const json = await response.json();
+        console.log("✅ DEBUG: Server response:", json);
     } catch (error) {
-        console.error("Error:", error.message);
+        console.error("❌ ERROR:", error.message);
     }
 }
 
-document.querySelector("form").addEventListener("submit", submitUser);

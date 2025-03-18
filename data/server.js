@@ -13,6 +13,10 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
+app.get("/page1", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "page1.html"));
+})
+
 app.post("/submitUser", (req, res) => {
   console.log("Modtaget POST-request fra klienten:");
   console.log(req.body); // Debugging
@@ -31,8 +35,7 @@ app.post("/submitUser", (req, res) => {
     },
   };
 
-  const userId = Date.now();
-  const jsonFilePath = path.join(__dirname, "users", `${userId}.json`);
+  const jsonFilePath = path.join(__dirname, "users", `${req.body.runNr}.json`);
 
   fs.mkdir(path.join(__dirname, "users"), { recursive: true }, (err) => {
     if (err) {
@@ -47,8 +50,7 @@ app.post("/submitUser", (req, res) => {
       }
       console.log("User data saved successfully to:", jsonFilePath);
 
-      // ✅ Send JSON response i stedet for HTML
-      res.json({ message: "User data saved!", redirect: "/page1.html" });
+      res.json({ message: "User data saved!" });
     });
   });
 });
