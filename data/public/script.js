@@ -257,3 +257,37 @@ async function submitUser(event) {
     console.error("Error:", error.message);
   }
 }
+
+document.getElementById("nextBtn").addEventListener("click", nextPage);
+
+let pagesArr = [
+  "page1.html",
+  "page2.html",
+  "page3.html",
+  "page4.html",
+  "page5.html",
+];
+
+function nextPage() {
+  let visitedPages = JSON.parse(localStorage.getItem("visitedPages")) || [];
+
+  // Get unvisited pages
+  let unvisitedPages = pagesArr.filter((page) => !visitedPages.includes(page));
+  console.log(unvisitedPages);
+
+  // Reset if all pages are visited
+  if (!unvisitedPages.length) {
+    window.location.href = "thanks.html";
+  } else {
+    // Pick a random page
+    let randomPage =
+      unvisitedPages[Math.floor(Math.random() * unvisitedPages.length)];
+
+    // Save visited page
+    visitedPages.push(randomPage);
+    localStorage.setItem("visitedPages", JSON.stringify(visitedPages));
+
+    // Navigate
+    window.location.href = randomPage;
+  }
+}

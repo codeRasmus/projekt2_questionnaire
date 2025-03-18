@@ -37,7 +37,7 @@ app.post("/submitUser", (req, res) => {
     },
   };
 
-  const userId = Date.now();
+  const userId = req.body.runNr;
   const jsonFilePath = path.join(__dirname, "users", `${userId}.json`);
 
   fs.mkdir(path.join(__dirname, "users"), { recursive: true }, (err) => {
