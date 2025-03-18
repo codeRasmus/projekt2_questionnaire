@@ -1,12 +1,15 @@
+require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const app = express();
 const crypto = require("crypto");
+const adminRoutes = require("./admin/adminRoutes"); // Importér admin routes
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use("/admin", adminRoutes); 
 
 app.get("/", (req, res) => {
   console.log("We are running");
@@ -61,5 +64,6 @@ app.post("/submitUser", (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+  console.log("Server kører på http://localhost:3000");
 });
+
