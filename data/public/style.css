@@ -10,18 +10,36 @@ body {
   height: 100vh;
 }
 
+#showSurveyBtn {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-image: url("images/review.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 20px;
+  position: absolute;
+  left: 100px;
+}
+
+button {
+  margin: 20px;
+}
+
 h1 {
   text-align: center;
 }
 
 form {
-  display: flex;
-  justify-content: center;
+  background-color: grey;
 }
+
+/*
 
 fieldset {
   margin: 0;
   padding: 20px;
   display: inline;
   font-style: sans-serif;
-}
+} */

@@ -7,7 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
     insertDemografiFormFromXML();
   } else {
     // On other pages, insert the Undersøgelse form
-    insertUndersøgelseForm();
+    document.getElementById("showSurveyBtn").addEventListener("click", () => {
+      insertUndersøgelseForm();
+    });
   }
 });
 
@@ -206,6 +208,7 @@ function insertUndersøgelseForm() {
       // Append form to the body
       form.appendChild(fieldset);
       document.body.appendChild(form);
+      document.getElementById("showSurveyBtn").remove();
     })
     .catch((error) => console.error("Error loading XML:", error));
 }
