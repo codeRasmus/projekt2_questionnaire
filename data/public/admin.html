@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script defer src="adminScript.js"></script>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <h2>JSON Besvarelser</h2>
+    <button onclick="fetchResponses(localStorage.getItem('authToken'))">Hent Besvarelser</button>
+    <ul id="responseList"></ul>
+    <button onclick="downloadResponses()">Download Alle (ZIP)</button>
+    <br>
+    <h2> Upload ny xml fil</h2>
+    <input type="file" id="xmlFileInput" accept=".xml">
+    <button onclick="uploadXML()">Upload & Erstat</button>
+    <p id="uploadStatus"></p>
+    <br>
+    <button onclick="logout()">Log ud</button>
+
+</body>
+</html>
