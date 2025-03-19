@@ -5,13 +5,20 @@ window.onload = function() {
      // Hvis token ikke findes, omdirigeres til login-siden
     if (!token) {
         window.location.href = "/login.html";
-    } else {
-        // Hvis token findes, hentes besvarelserne
-        fetchResponses(token);
-    }
+    } 
+    // else {
+    //     // Hvis token findes, hentes besvarelserne
+    //     fetchResponses(token);
+    // }
 };
 
 async function fetchResponses(token) {
+    if (!token) {
+        console.error("❌ Ingen token tilgængelig. Kan ikke hente besvarelser.");
+        return;
+    }
+
+    try {
     const res = await fetch("/admin/responses", {
         method: "GET",
         headers: {
@@ -33,8 +40,11 @@ async function fetchResponses(token) {
             });
         }
     } else {
-        console.error("Fejl ved hentning af besvarelser");
+        console.error("Fejl ved hentning af besvarelser:", await res.text());
     }
+} catch (error) {
+    console.error("Fejl ved hentning af besvarelser:", error);
+}
 }
 
 // Funktion til at tjekke, om tokenet er udløbet
@@ -63,7 +73,7 @@ function logout() {
 checkAuth();
 
 // Tjek tokenet hvert sekund (automatisk log ud, hvis det udløber)
-setInterval(checkAuth, 10000);
+setInterval(checkAuth, 30000);
 
 // Funktion til at downloade besvarelserne som en ZIP-fil
 async function downloadResponses() {
@@ -77,7 +87,20 @@ async function downloadResponses() {
     });
 
     if (res.ok) {
-        window.location.href = "/admin/download-responses";
+        // Konverterer svaret til en blob (binær data)
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        // Opretter et usynligt download-link
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "responses.zip";
+        document.body.appendChild(a);
+        a.click();
+
+        // Oprydning
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
     } else {
         alert('Fejl ved download af besvarelser');
     }

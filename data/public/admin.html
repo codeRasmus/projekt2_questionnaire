@@ -10,7 +10,7 @@
     <h1>Admin Dashboard</h1>
 
     <h2>JSON Besvarelser</h2>
-    <button onclick="fetchResponses()">Hent Besvarelser</button>
+    <button onclick="fetchResponses(localStorage.getItem('authToken'))">Hent Besvarelser</button>
     <ul id="responseList"></ul>
     <button onclick="downloadResponses()">Download Alle (ZIP)</button>
     <br><br>

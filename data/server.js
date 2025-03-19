@@ -65,5 +65,6 @@ app.post("/submitUser", (req, res) => {
 
 app.listen(3000, () => {
   console.log("Server kører på http://localhost:3000");
+  console.log("Admin login på http://localhost:3000/login.html");
 });
 

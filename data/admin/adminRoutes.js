@@ -27,7 +27,7 @@ router.post("/login", (req, res) => {
     }
 
     // Generer JWT-token
-    const token = jwt.sign({ username: user.username }, SECRET_KEY, { expiresIn: "10s" });
+    const token = jwt.sign({ username: user.username }, SECRET_KEY, { expiresIn: "1h" });
     res.json({ token });
 });
 
@@ -46,10 +46,15 @@ router.get("/responses", authenticateToken, (req, res) => {
 
 // Route til at downloade besvarelserne som en ZIP-fil
 router.get("/download-responses", authenticateToken, (req, res) => {
+        // Log brugerens information (hvis autentifikationen er vellykket)
+        console.log("Token valideret for bruger:", req.user); 
     const zipFilePath = path.join(__dirname, "../responses.zip");
 
     const output = fs.createWriteStream(zipFilePath);
-    const archive = require("archiver")("zip");
+    // const archive = require("archiver")("zip");
+    const archive = archiver("zip", {
+        zlib: { level: 9 }, // Komprimeringsniveau
+    });
 
     output.on("close", () => {
         res.download(zipFilePath, 'responses.zip', (err) => {
@@ -66,11 +71,14 @@ router.get("/download-responses", authenticateToken, (req, res) => {
     archive.on("error", (err) => res.status(500).json({ message: "Fejl ved ZIP-oprettelse" }));
 
     archive.pipe(output);
+    
     fs.readdir(responsesDir, (err, files) => {
         if (err) return res.status(500).json({ message: "Fejl ved ZIP-oprettelse" });
 
         files.forEach(file => {
-            archive.file(path.join(responsesDir, file), { name: file });
+            if (file.endsWith(".json")) { // Sørg for kun at tilføje JSON-filer
+                archive.file(path.join(responsesDir, file), { name: file });
+            }
         });
 
         archive.finalize();
