@@ -13,7 +13,12 @@
     <button onclick="fetchResponses(localStorage.getItem('authToken'))">Hent Besvarelser</button>
     <ul id="responseList"></ul>
     <button onclick="downloadResponses()">Download Alle (ZIP)</button>
-    <br><br>
+    <br>
+    <h2> Upload ny xml fil</h2>
+    <input type="file" id="xmlFileInput" accept=".xml">
+    <button onclick="uploadXML()">Upload & Erstat</button>
+    <p id="uploadStatus"></p>
+    <br>
     <button onclick="logout()">Log ud</button>
 
 </body>

@@ -105,3 +105,53 @@ async function downloadResponses() {
         alert('Fejl ved download af besvarelser');
     }
 }
+
+// Håndtering af xml upload
+async function uploadXML() {
+    const fileInput = document.getElementById("xmlFileInput");
+    const statusText = document.getElementById("uploadStatus");
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+        alert("Du er ikke logget ind!");
+        return;
+    }
+
+    if (fileInput.files.length === 0) {
+        alert("Vælg en XML-fil først!");
+        return;
+    }
+
+    const file = fileInput.files[0];
+
+    if (file.type !== "text/xml") {
+        alert("Kun XML-filer er tilladt!");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("xmlFile", file);
+
+    try {
+        const res = await fetch("/admin/upload-xml", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+            body: formData
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+            statusText.textContent = "✅ Filen blev uploadet!";
+            statusText.style.color = "green";
+        } else {
+            statusText.textContent = "❌ Fejl: " + result.error;
+            statusText.style.color = "red";
+        }
+    } catch (error) {
+        console.error("Fejl ved upload:", error);
+        statusText.textContent = "❌ En fejl opstod under upload.";
+        statusText.style.color = "red";
+    }
+}

@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
 const archiver = require("archiver");
-const xml2js = require("xml2js");
+
 const { authenticateToken } = require("./authMiddleware");
 const { loadAdminUsers } = require("./userModel");
 
@@ -14,7 +14,8 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 const router = express.Router();
 const adminUsersFilePath = path.join(__dirname, "adminUsers.json");
-
+// Midlertidig lagring af uploadet xml fil
+const upload = multer({ dest: "uploads/" });
 
 // Admin login
 router.post("/login", (req, res) => {
@@ -86,6 +87,35 @@ router.get("/download-responses", authenticateToken, (req, res) => {
 });
 
 router.get("/responses", authenticateToken, (req, res) => {
+});
+
+// Route til upload af en ny .xml fil
+router.post("/upload-xml", authenticateToken, upload.single("xmlFile"), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: "Ingen fil modtaget." });
+    }
+
+    const tempPath = req.file.path;
+    const targetPath = path.join(__dirname, "../public/spørgeskema.xml");
+
+    // Tjek om filen er en XML-fil
+    if (path.extname(req.file.originalname).toLowerCase() !== ".xml") {
+        fs.unlink(tempPath, () => {});
+        return res.status(400).json({ error: "Kun XML-filer er tilladt." });
+    }
+
+    // Slet den gamle fil først, hvis den eksisterer
+    if (fs.existsSync(targetPath)) {
+        fs.unlinkSync(targetPath);
+    }
+
+    // Flyt den nye fil til public-mappen og omdøb
+    fs.rename(tempPath, targetPath, (err) => {
+        if (err) {
+            return res.status(500).json({ error: "Fejl ved upload." });
+        }
+        res.status(200).json({ message: "Spørgeskemaet er opdateret!" });
+    });
 });
 
 module.exports = router;
