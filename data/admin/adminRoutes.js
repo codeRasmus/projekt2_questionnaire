@@ -18,22 +18,29 @@ const upload = multer({ dest: "uploads/" });
 const usersFolder = "./users";
 
 // Admin login
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   const { username, password } = req.body;
-  const users = JSON.parse(fs.readFileSync(adminUsersFilePath, "utf8"));
-  const user = users.find((u) => u.username === username);
+  const adminUsers = JSON.parse(fs.readFileSync(adminUsersFilePath, "utf8"));
+  const user = adminUsers.find(user => user.username === username);
 
-  if (!user || !bcrypt.compareSync(password, user.password)) {
+    if (!user) {
     return res
       .status(401)
       .json({ message: "Forkert brugernavn eller adgangskode" });
   }
+
+    // Sammenlign adgangskoden med bcrypt
+    bcrypt.compare(password, user.password, (err, result) => {
+      if (err || !result) {
+        return res.status(401).json({ error: "Forkert brugernavn eller adgangskode" });
+      }
 
   // Generer JWT-token
   const token = jwt.sign({ username: user.username }, SECRET_KEY, {
     expiresIn: "1h",
   });
   res.json({ token });
+});
 });
 
 // Path til besvarelserne
@@ -59,7 +66,6 @@ router.get("/download-responses", authenticateToken, (req, res) => {
   const zipFilePath = path.join(__dirname, "../responses.zip");
 
   const output = fs.createWriteStream(zipFilePath);
-  // const archive = require("archiver")("zip");
   const archive = archiver("zip", {
     zlib: { level: 9 }, // Komprimeringsniveau
   });

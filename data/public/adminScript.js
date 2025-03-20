@@ -25,7 +25,7 @@ async function fetchResponses(token) {
     if (res.ok) {
       const data = await res.json();
       const responseList = document.getElementById("responseList");
-      responseList.innerHTML = ""; // Ryd tidligere liste
+      responseList.textContent = ""; // Ryd tidligere liste
 
       // Hvis besvarelserne findes, tilføj dem til listen
       if (data.responses) {
