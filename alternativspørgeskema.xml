@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spørgeskema>
+  <spørgsmålsgruppe>
+    <id>demografi</id>
+    <tilfældigRækkefølge>false</tilfældigRækkefølge>
+    <spørgsmål>
+      <id>alder</id>
+      <type>integer</type>
+      <obligatorisk>true</obligatorisk>
+      <tekst>Hvad er din alder?</tekst>
+      <min>18</min>
+    </spørgsmål>
+    <spørgsmål>
+      <id>køn</id>
+      <type>dropdown</type>
+      <obligatorisk>true</obligatorisk>
+      <tekst>Hvad er dit køn?</tekst>
+      <option>kvinde</option>
+      <option>mand</option>
+      <option>andet</option>
+    </spørgsmål>
+    <spørgsmål>
+      <id>uddannelse</id>
+      <type>dropdown</type>
+      <obligatorisk>true</obligatorisk>
+      <tekst>Hvad er din højeste uddannelsesniveau som du har afsluttet eller er i gang med?</tekst>
+      <option>folkeskole</option>
+      <option>erhvervsuddannelse</option>
+      <option>hf/hhx/htx/stx</option>
+      <option>erhversakademiuddannelse</option>
+      <option>professionsbachelor</option>
+      <option>bachelor</option>
+      <option>kandidat/master</option>
+      <option>ph.d.</option>
+    </spørgsmål>
+    <spørgsmål>
+      <id>beskæftigelse</id>
+      <type>tekst</type>
+      <obligatorisk>true</obligatorisk>
+      <tekst>Hvad er din aktuelle beskæftigelse eller din sidste beskæftigelse hvis du er uden for arbejdsmarkedet?</tekst>
+    </spørgsmål>
+  </spørgsmålsgruppe>
+  
+  <spørgsmålsgruppe>
+    <id>undersøgelse</id>
+    <tilfældigRækkefølge>true</tilfældigRækkefølge>
+    <spørgsmål>
+      <id>1</id>
+      <type>skala</type>
+      <niveauer>6</niveauer>
+      <tekst>Hvor brugervenlig synes du, at navigationen på siden er?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>2</id>
+      <type>skala</type>
+      <niveauer>6</niveauer>
+      <tekst>Hvor hurtigt indlæses siden?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>3</id>
+      <type>skala</type>
+      <niveauer>6</niveauer>
+      <tekst>Hvor relevant finder du informationen på siden?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>4</id>
+      <type>skala</type>
+      <niveauer>6</niveauer>
+      <tekst>Hvor let er det at finde den information, du søger på siden?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>5</id>
+      <type>skala</type>
+      <niveauer>6</niveauer>
+      <tekst>Hvor tilfreds er du med sidens visuelle layout?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>6</id>
+      <type>skala</type>
+      <niveauer>6</niveauer>
+      <tekst>Hvor relevant er den funktionalitet, der tilbydes på siden?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>7</id>
+      <type>tekst</type>
+      <tekst>Hvilke forbedringer vil du foreslå for denne hjemmeside?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>8</id>
+      <type>Likert</type>
+      <niveauer>6</niveauer>
+      <tekst>Indholdet på siden er opdateret og relevant</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>9</id>
+      <type>Likert</type>
+      <niveauer>6</niveauer>
+      <tekst>Designet af hjemmesiden er moderne og tidssvarende</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>10</id>
+      <type>Likert</type>
+      <niveauer>6</niveauer>
+      <tekst>Det er nemt at finde kontaktinformationer på siden</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>11</id>
+      <type>Likert</type>
+      <niveauer>6</niveauer>
+      <tekst>Informationen på siden er godt organiseret</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>12</id>
+      <type>Likert</type>
+      <niveauer>6</niveauer>
+      <tekst>Jeg føler mig tryg ved at bruge hjemmesiden</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>13</id>
+      <type>Likert</type>
+      <niveauer>6</niveauer>
+      <tekst>Jeg oplever, at siden er pålidelig</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>14</id>
+      <type>Likert</type>
+      <niveauer>6</niveauer>
+      <tekst>Jeg har nemt ved at finde de ønskede produkter/tjenester på siden</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>15</id>
+      <type>Likert</type>
+      <niveauer>6</niveauer>
+      <tekst>Jeg vil anbefale denne hjemmeside til andre</tekst>
+    </spørgsmål>
+  </spørgsmålsgruppe>
+</spørgeskema>
