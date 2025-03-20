@@ -1,0 +1,36 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="spørgeskema">
+    <xs:annotation>
+      <xs:documentation> Add XML Data </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="spørgsmålsgruppe" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="id"/>
+              <xs:element type="xs:string" name="tilfældigRækkefølge"/>
+              <xs:element name="spørgsmål" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="id"/>
+                    <xs:element type="xs:string" name="type"/>
+                    <xs:element type="xs:string" name="obligatorisk" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="niveauer" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation> Preambel: På en skala fra 1 til ${niveauer}, hvor 1 er lavest,  Hvor enig er du i følgende udsagn?: `Meget uenig - Uenig - ${niveauer===5?'hverken enig eller uenig':'Lidt uenig - Lidt enig'} - Enig - Meget enig </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element type="xs:string" name="tekst"/>
+                    <xs:element type="xs:byte" name="min" minOccurs="0"/>
+                    <xs:element type="xs:string" name="option" maxOccurs="unbounded" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
