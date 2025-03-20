@@ -143,6 +143,7 @@ h2 {
 
 .question_container input[type="range"] {
   width: 80%;
+  margin-top: 40px;
 }
 
 .question_container input[type="text"],
