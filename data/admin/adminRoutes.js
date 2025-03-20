@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
 const archiver = require("archiver");
-
+const libxmljs = require("libxmljs");
 const { authenticateToken } = require("./authMiddleware");
 const { loadAdminUsers } = require("./userModel");
 
@@ -97,13 +97,38 @@ router.post("/upload-xml", authenticateToken, upload.single("xmlFile"), (req, re
 
     const tempPath = req.file.path;
     const targetPath = path.join(__dirname, "../public/spørgeskema.xml");
+    const xsdPath = path.join(__dirname, "../validation/schema.xsd");
 
     // Tjek om filen er en XML-fil
     if (path.extname(req.file.originalname).toLowerCase() !== ".xml") {
         fs.unlink(tempPath, () => {});
         return res.status(400).json({ error: "Kun XML-filer er tilladt." });
     }
+    // Læs XML-indholdet
+    fs.readFile(tempPath, "utf8", (err, xmlData) => {
+        if (err) {
+            fs.unlink(tempPath, () => {});
+            return res.status(500).json({ error: "Fejl ved læsning af XML-filen." });
+        }
+        try {
+            // Parse XML
+            const xmlDoc = libxmljs.parseXml(xmlData);
 
+            // Læs XSD-skemaet
+            fs.readFile(xsdPath, "utf8", (err, xsdData) => {
+                if (err) {
+                    fs.unlink(tempPath, () => {});
+                    return res.status(500).json({ error: "Fejl ved læsning af XSD-skemaet." });
+                }
+
+                // Parse XSD
+                const xsdDoc = libxmljs.parseXml(xsdData);
+
+                // Validér XML mod XSD
+                if (!xmlDoc.validate(xsdDoc)) {
+                    fs.unlink(tempPath, () => {});
+                    return res.status(400).json({ error: "XML er ikke valid i forhold til XSD.", details: xmlDoc.validationErrors });
+                }
     // Slet den gamle fil først, hvis den eksisterer
     if (fs.existsSync(targetPath)) {
         fs.unlinkSync(targetPath);
@@ -116,6 +141,12 @@ router.post("/upload-xml", authenticateToken, upload.single("xmlFile"), (req, re
         }
         res.status(200).json({ message: "Spørgeskemaet er opdateret!" });
     });
+});
+} catch (e) {
+    fs.unlink(tempPath, () => {});
+    return res.status(400).json({ error: "Ugyldig XML-fil: Syntaxfejl." });
+}
+});
 });
 
 module.exports = router;
