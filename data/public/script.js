@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  let runNr = localStorage.getItem("runNr"); // Tjek om der er et eksisterende runNr
+  let runNr = localStorage.getItem("runNr");
   const page = window.location.pathname.split("/").pop();
 
   if (
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   } else {
     if (!runNr) {
       alert("Fejl: Du skal først udfylde demografi-formularen.");
-      window.location.href = "/"; // Send brugeren tilbage til forsiden
+      window.location.href = "/";
       return;
     }
 
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const isValid = await validateRunNr(runNr, page);
     if (!isValid) {
       alert("Fejl: Dit runNr er ugyldigt. Prøv at starte forfra.");
-      localStorage.removeItem("runNr"); // Fjern det ugyldige ID
+      localStorage.removeItem("runNr");
       window.location.href = "/";
       return;
     }
@@ -30,14 +30,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 });
-
-let pagesArr = [
-  "page1.html",
-  "page2.html",
-  "page3.html",
-  "page4.html",
-  "page5.html",
-];
 
 function getPersistentId() {
   let runNr = localStorage.getItem("runNr");
@@ -72,7 +64,7 @@ async function validateRunNr(runNr, page) {
   }
 }
 
-// Insert Demografi form
+// Inser Demografi form
 function insertDemografiFormFromXML() {
   fetch("spørgeskema.xml")
     .then((response) => response.text())
@@ -86,17 +78,16 @@ function insertDemografiFormFromXML() {
 
       // Create form
       const form = document.createElement("form");
-      // form.setAttribute("action", "../submitUser");
-      // form.setAttribute("method", "post");
+      form.setAttribute("id", "demografiForm");
 
-      // Create fieldset for Demografi
+      // Create fieldset
       const fieldset = document.createElement("fieldset");
-      const legend = document.createElement("legend");
-      legend.textContent = "Demografi";
-      fieldset.appendChild(legend);
 
-      // Process questions in the first group
-      group.querySelectorAll("spørgsmål").forEach((question) => {
+      // Array to store question containers
+      const questionContainers = [];
+
+      // Process questions
+      group.querySelectorAll("spørgsmål").forEach((question, index) => {
         const idElement = question.querySelector("id");
         const typeElement = question.querySelector("type");
         const labelTextElement = question.querySelector("tekst");
@@ -107,13 +98,18 @@ function insertDemografiFormFromXML() {
         const type = typeElement.textContent;
         const labelText = labelTextElement.textContent;
 
+        // Create question container
+        const questionDiv = document.createElement("div");
+        questionDiv.classList.add("question_container");
+        if (index === 0) questionDiv.classList.add("active");
+
         // Create label
         const label = document.createElement("label");
         label.setAttribute("for", id);
         label.textContent = labelText;
-        fieldset.appendChild(label);
+        questionDiv.appendChild(label);
 
-        // Create input field based on question type
+        // Create input field based on type
         let inputElement;
         if (type === "integer") {
           inputElement = document.createElement("input");
@@ -141,65 +137,126 @@ function insertDemografiFormFromXML() {
           inputElement = document.createElement("textarea");
           inputElement.setAttribute("id", id);
           inputElement.setAttribute("name", id);
+        } else {
+          inputElement = document.createElement("input");
+          inputElement.setAttribute("type", "text");
         }
 
-        fieldset.appendChild(inputElement);
-        fieldset.appendChild(document.createElement("br"));
+        questionDiv.appendChild(inputElement);
+        fieldset.appendChild(questionDiv);
+        questionContainers.push(questionDiv);
       });
 
-      // Submit button
+      // Navigation buttons
+      const buttonContainer = document.createElement("div");
+      buttonContainer.classList.add("buttons");
+
+      const prevBtn = document.createElement("button");
+      prevBtn.setAttribute("type", "button");
+      prevBtn.textContent = "Tilbage";
+      prevBtn.style.display = "none";
+
+      const nextBtn = document.createElement("button");
+      nextBtn.setAttribute("type", "button");
+      nextBtn.textContent = "Næste";
+
       const submitButton = document.createElement("button");
       // submitButton.setAttribute("type", "submit");
       submitButton.textContent = "Send";
-      fieldset.appendChild(submitButton);
+      submitButton.style.display = "none"; // Initially hidden
+      submitButton.addEventListener("click", submitUser);
 
-      // Append everything to the form and then to the body
+      buttonContainer.appendChild(prevBtn);
+      buttonContainer.appendChild(nextBtn);
+      buttonContainer.appendChild(submitButton);
+      fieldset.appendChild(buttonContainer);
       form.appendChild(fieldset);
       document.body.appendChild(form);
-      submitButton.addEventListener("click", submitUser);
+
+      let currentIndex = 0;
+
+      function showQuestion(index) {
+        questionContainers.forEach((q, i) => {
+          q.classList.toggle("active", i === index);
+        });
+
+        prevBtn.style.display = index === 0 ? "none" : "inline-block";
+
+        // If last question, show submit button and hide "Next"
+        if (index === questionContainers.length - 1) {
+          nextBtn.style.display = "none";
+          submitButton.style.display = "inline-block";
+        } else {
+          nextBtn.style.display = "inline-block";
+          submitButton.style.display = "none";
+        }
+      }
+
+      nextBtn.addEventListener("click", () => {
+        if (currentIndex < questionContainers.length - 1) {
+          currentIndex++;
+          showQuestion(currentIndex);
+        }
+      });
+
+      prevBtn.addEventListener("click", () => {
+        if (currentIndex > 0) {
+          currentIndex--;
+          showQuestion(currentIndex);
+        }
+      });
+      showQuestion(currentIndex);
     })
     .catch((error) => console.error("Error loading XML:", error));
 }
+
 // Insert Undersøgelse form
 function insertUndersøgelseForm() {
   fetch("spørgeskema.xml")
     .then((response) => response.text())
     .then((xmlText) => {
+      document.querySelector(".btnContainer").style.display = "none";
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlText, "text/xml");
 
-      const group = xmlDoc.querySelectorAll("spørgsmålsgruppe")[1]; // Hent den anden gruppe
+      const group = xmlDoc.querySelectorAll("spørgsmålsgruppe")[1];
       if (!group) return;
 
       const form = document.createElement("form");
       form.setAttribute("id", "surveyForm");
 
       const fieldset = document.createElement("fieldset");
-
       const questions = Array.from(group.querySelectorAll("spørgsmål"));
-      shuffleArray(questions); // Bland spørgsmålene tilfældigt
+      shuffleArray(questions);
+
+      const questionContainers = [];
 
       questions.forEach((question, index) => {
         const idElement = question.querySelector("id");
         const typeElement = question.querySelector("type");
         const labelTextElement = question.querySelector("tekst");
 
-        if (!idElement || !typeElement || !labelTextElement) {
-          console.warn("Missing element in question, skipping...");
-          return;
-        }
+        if (!idElement || !typeElement || !labelTextElement) return;
 
         const id = idElement.textContent;
         const type = typeElement.textContent;
-        const labelText = labelTextElement.textContent;
+        let labelText = labelTextElement.textContent;
+
+        if (type === "Likert") {
+          labelText =
+            "På en skala fra 1 til 6, hvor enig er du i følgende udsagn: <br><br>" +
+            "<i>" +
+            labelTextElement.textContent +
+            "</i>";
+        }
 
         const questionDiv = document.createElement("div");
         questionDiv.classList.add("question_container");
-        if (index === 0) questionDiv.classList.add("active"); // Kun første spørgsmål er synligt fra start
+        if (index === 0) questionDiv.classList.add("active");
 
         const label = document.createElement("label");
         label.setAttribute("for", id);
-        label.textContent = labelText;
+        label.innerHTML = labelText;
         questionDiv.appendChild(label);
 
         let inputElement;
@@ -231,6 +288,7 @@ function insertUndersøgelseForm() {
         inputElement.setAttribute("name", id);
         questionDiv.appendChild(inputElement);
         fieldset.appendChild(questionDiv);
+        questionContainers.push(questionDiv);
       });
 
       // Navigation buttons
@@ -239,43 +297,53 @@ function insertUndersøgelseForm() {
 
       const prevBtn = document.createElement("button");
       prevBtn.setAttribute("type", "button");
-      prevBtn.setAttribute("id", "prevBtn");
       prevBtn.textContent = "Tilbage";
-      prevBtn.style.display = "none"; // Skjules fra start
+      prevBtn.style.display = "none";
 
       const nextBtn = document.createElement("button");
       nextBtn.setAttribute("type", "button");
-      nextBtn.setAttribute("id", "nextBtn");
       nextBtn.textContent = "Næste";
+
+      const submitButton = document.createElement("button");
+      submitButton.setAttribute("type", "submit");
+      submitButton.textContent = "Send";
+      submitButton.style.display = "none";
 
       buttonContainer.appendChild(prevBtn);
       buttonContainer.appendChild(nextBtn);
+      buttonContainer.appendChild(submitButton);
       fieldset.appendChild(buttonContainer);
       form.appendChild(fieldset);
       document.body.appendChild(form);
 
-      // Fjern eksisterende knapper, hvis de findes
-      const oldBtnContainer = document.querySelector(".btnContainer");
-      if (oldBtnContainer) oldBtnContainer.remove();
-
-      // Karrousel-funktionalitet
-      const questionContainers = document.querySelectorAll(
-        ".question_container"
-      );
       let currentIndex = 0;
 
       function showQuestion(index) {
         questionContainers.forEach((q, i) => {
           q.classList.toggle("active", i === index);
         });
+
         prevBtn.style.display = index === 0 ? "none" : "inline-block";
 
-        // Hide the "Next" button if it's the last question
         if (index === questionContainers.length - 1) {
           nextBtn.style.display = "none";
+          checkAllQuestionsAnswered();
         } else {
           nextBtn.style.display = "inline-block";
+          submitButton.style.display = "none";
         }
+      }
+
+      function checkAllQuestionsAnswered() {
+        const allAnswered = questionContainers.every((q) => {
+          const input = q.querySelector("input, textarea");
+          if (!input) return false;
+          if (input.type === "radio") {
+            return q.querySelector("input:checked") !== null;
+          }
+          return input.value.trim() !== "";
+        });
+        submitButton.style.display = allAnswered ? "inline-block" : "none";
       }
 
       nextBtn.addEventListener("click", () => {
@@ -291,14 +359,15 @@ function insertUndersøgelseForm() {
           showQuestion(currentIndex);
         }
       });
-      // Submit button
-      const submitButton = document.createElement("button");
-      submitButton.addEventListener("click", submitSurvey);
-      submitButton.textContent = "Send";
-      console.log("created submit button");
-      buttonContainer.appendChild(submitButton);
 
-      showQuestion(currentIndex); // Start med første spørgsmål synligt
+      questionContainers.forEach((q) => {
+        q.addEventListener("input", checkAllQuestionsAnswered);
+      });
+
+      // Attach submitSurvey to submit button
+      submitButton.addEventListener("click", submitSurvey);
+
+      showQuestion(currentIndex);
     })
     .catch((error) => console.error("Error loading XML:", error));
 }
@@ -380,6 +449,13 @@ async function submitSurvey(event) {
 }
 
 function nextPage() {
+  let pagesArr = [
+    "page1.html",
+    "page2.html",
+    "page3.html",
+    "page4.html",
+    "page5.html",
+  ];
   let visitedPages = JSON.parse(localStorage.getItem("visitedPages")) || [];
 
   let unvisitedPages = pagesArr.filter((page) => !visitedPages.includes(page));

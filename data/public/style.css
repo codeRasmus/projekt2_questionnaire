@@ -1,5 +1,8 @@
 * {
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -13,83 +16,159 @@ body {
 }
 
 .btnContainer {
-  width: 150px;
-  height: 150px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
   background-color: white;
-  border: 2px solid black;
+  border: 1px solid #c33afe;
   position: absolute;
-  left: 100px;
+  left: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
-  animation-name: pulseBtn;
-  animation-iteration-count: infinite;
-  animation-duration: 1.5s;
-  animation-timing-function: ease-out;
+  animation: pulseBtn 1.5s ease-out infinite;
+  cursor: pointer;
+  transition: all 1s ease-out;
 }
 
 #showSurveyBtn {
   width: 80px;
   height: 80px;
-  background-image: url("images/review.png");
+  background-image: url("images/browser.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   padding: 20px;
+  border: none;
+  cursor: pointer;
 }
 
 @keyframes pulseBtn {
-  0% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
     transform: scale(1.1);
   }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-button {
-  margin: 20px;
-}
-
-h1 {
-  text-align: center;
 }
 
 form {
-  min-width: 800px;
-  background-color: grey;
+  width: 700px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  border-radius: 20px;
+  padding: 10px;
 }
 
-form fieldset {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+fieldset {
+  background-color: rgb(242, 242, 242);
+  padding: 0;
+  border: 1px solid #c33afe;
+  border-radius: 20px;
+}
+
+fieldset button {
+  margin: 20px;
+  background-color: #c33afe;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  padding: 16px 70px;
+  cursor: pointer;
+  font-size: 1.3rem;
+}
+
+h1,
+h2 {
+  text-align: center;
+  max-width: 800px;
+  font-weight: 400;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin-bottom: 50px;
 }
 
 .buttons {
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .question_container {
   display: none;
-  width: 100%;
+  width: 800px;
+  height: 270px;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.question_container input,
+.question_container label {
+  margin: 20px 0;
+  font-size: 1.5rem;
+  text-align: center;
+  max-width: 500px;
+}
+
+.question_container div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.question_container div label {
+  font-size: unset;
+}
+
+.question_container input[type="radio"] {
+  margin: 0 20px;
+}
+
+.question_container input[type="range"] {
+  width: 80%;
+}
+
+.question_container input[type="text"],
+.question_container input[type="number"],
+select {
+  background-color: transparent;
+  width: 80%;
+  min-height: 50px;
+  padding-left: 20px;
+  border: 1px solid #c33afe;
+}
+
 .question_container textarea {
-  max-width: 50%;
+  border: 1px solid #c33afe;
+}
+
+.question_container input[type="text"]:focus,
+.question_container input[type="number"]:focus,
+.question_container select:focus,
+.question_container textarea:focus {
+  outline: none;
+  border-color: #c33afe;
+  border: solid 1px #c33afe;
+  box-shadow: 0 0 10px rgba(195, 58, 254, 0.5);
+}
+
+.question_container textarea {
+  width: 60%;
+  background-color: transparent;
+  padding: 20px 20px 0;
 }
 
 .question_container.active {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
