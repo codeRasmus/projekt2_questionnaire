@@ -17,7 +17,5 @@ To run the project, follow these steps:
 2. Insert the following environment variables (note that storing sensitive information like this in a public repo is not recommended):
    ```bash
    SECRET_KEY=my_secret_key
-   ADMIN_USERNAME=admin
-   ADMIN_PASSWORD=adminpassword
    ```
-3. Now you can access the dashboard from login.html - use the credentials above.
+3. Access the dashboard from login.html - use the following credentials: admin as username, adminpassword as password.
