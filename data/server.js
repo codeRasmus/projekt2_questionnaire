@@ -9,7 +9,7 @@ const adminRoutes = require("./admin/adminRoutes"); // Importér admin routes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
-app.use("/admin", adminRoutes); 
+app.use("/admin", adminRoutes);
 
 app.get("/", (req, res) => {
   console.log("We are running");
@@ -45,9 +45,9 @@ app.post("/validateRunNr", (req, res) => {
             alder: null,
             køn: null,
             uddannelse: null,
-            beskæftigelse: null
+            beskæftigelse: null,
           },
-          undersøgelser: {}
+          undersøgelser: {},
         };
 
         fs.writeFile(jsonFilePath, JSON.stringify(newUserData, null, 2), (writeErr) => {
@@ -193,4 +193,3 @@ app.listen(3000, () => {
   console.log("Server kører på http://localhost:3000");
   console.log("Admin login på http://localhost:3000/login.html");
 });
-
