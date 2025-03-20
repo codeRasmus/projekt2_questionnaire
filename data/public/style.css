@@ -126,6 +126,8 @@ h2 {
 
 .question_container div label {
   font-size: unset;
+  display: flex;
+  flex-direction: column;
 }
 
 .question_container input[type="radio"] {
