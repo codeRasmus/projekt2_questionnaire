@@ -112,7 +112,7 @@ app.post("/submitUser", (req, res) => {
     });
   });
 
-  res.redirect(`/page1.html?runNr=${req.body.runNr}`);
+  res.json({ message: "Du er nu logget ind" });
 });
 
 // Brugeren besvarelse skrives til .json fil navngivet med runNr
