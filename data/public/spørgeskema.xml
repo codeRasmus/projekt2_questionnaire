@@ -4,14 +4,14 @@
     <id>demografi</id>
     <tilfældigRækkefølge>false</tilfældigRækkefølge>
     <spørgsmål>
-			<id>alder</id>
+      <id>alder</id>
       <type>integer</type>
       <obligatorisk>true</obligatorisk>
       <tekst>Hvad er din alder?</tekst>
       <min>18</min>
     </spørgsmål>
     <spørgsmål>
-			<id>køn</id>
+      <id>køn</id>
       <type>dropdown</type>
       <obligatorisk>true</obligatorisk>
       <tekst>Hvad er dit køn?</tekst>
@@ -20,7 +20,7 @@
       <option>andet</option>
     </spørgsmål>
     <spørgsmål>
-			<id>uddannelse</id>
+      <id>uddannelse</id>
       <type>dropdown</type>
       <obligatorisk>true</obligatorisk>
       <tekst>Hvad er din højeste uddannelsesniveau som du har afsluttet eller er i gang med?</tekst>
@@ -34,103 +34,104 @@
       <option>ph.d.</option>
     </spørgsmål>
     <spørgsmål>
-			<id>beskæftigelse</id>
+      <id>beskæftigelse</id>
       <type>tekst</type>
       <obligatorisk>true</obligatorisk>
       <tekst>Hvad er din aktuelle beskæftigelse eller din sidste beskæftigelse hvis du er uden for arbejdsmarkedet?</tekst>
     </spørgsmål>
   </spørgsmålsgruppe>
+  
   <spørgsmålsgruppe>
     <id>undersøgelse</id>
     <tilfældigRækkefølge>true</tilfældigRækkefølge>
     <spørgsmål>
-			<id>1</id>
-      <type>skala</type><!-- Preambel: På en skala fra 1 til ${niveauer}, hvor 1 er lavest, -->
-      <niveauer>6</niveauer>
-      <tekst>Hvor tiltalende finder du siden i sin helhed?</tekst>
-    </spørgsmål>
-    <spørgsmål>
-			<id>2</id>
+      <id>1</id>
       <type>skala</type>
       <niveauer>6</niveauer>
-      <tekst>Hvor tiltalende finder du sidens opsætning?</tekst>
+      <tekst>Hvor brugervenlig synes du, at navigationen på siden er?</tekst>
     </spørgsmål>
     <spørgsmål>
-			<id>3</id>
+      <id>2</id>
       <type>skala</type>
       <niveauer>6</niveauer>
-      <tekst>Hvor tiltalende finder du billederne på siden?</tekst>
+      <tekst>Hvor hurtigt indlæses siden?</tekst>
     </spørgsmål>
     <spørgsmål>
-			<id>4</id>
+      <id>3</id>
       <type>skala</type>
       <niveauer>6</niveauer>
-      <tekst>Hvor tiltalende finder du sidens sproglige indhold?</tekst>
+      <tekst>Hvor relevant finder du informationen på siden?</tekst>
     </spørgsmål>
     <spørgsmål>
-			<id>5</id>
+      <id>4</id>
       <type>skala</type>
       <niveauer>6</niveauer>
-      <tekst>Hvor tiltalende finder du farverne på siden?</tekst>
+      <tekst>Hvor let er det at finde den information, du søger på siden?</tekst>
     </spørgsmål>
     <spørgsmål>
-			<id>6</id>
+      <id>5</id>
       <type>skala</type>
       <niveauer>6</niveauer>
-      <tekst>Hvor sandsynligt er det at du ville benytte dig af virksomhedens produkter?</tekst>
+      <tekst>Hvor tilfreds er du med sidens visuelle layout?</tekst>
     </spørgsmål>
     <spørgsmål>
-			<id>7</id>
+      <id>6</id>
+      <type>skala</type>
+      <niveauer>6</niveauer>
+      <tekst>Hvor relevant er den funktionalitet, der tilbydes på siden?</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>7</id>
       <type>tekst</type>
-      <tekst>Skriv op til 5 tillægsord som du synes beskriver siden</tekst>
+      <tekst>Hvilke forbedringer vil du foreslå for denne hjemmeside?</tekst>
     </spørgsmål>
     <spørgsmål>
-			<id>8</id>
-      <type>Likert</type><!-- Hvor enig er du i følgende udsagn?: `Meget uenig - Uenig - ${niveauer===5?'hverken enig eller uenig':'Lidt uenig - Lidt enig'} - Enig - Meget enig -->
-      <niveauer>6</niveauer>
-      <tekst>Teksten på siden er stavet korrekt</tekst>
-    </spørgsmål>
-    <spørgsmål>
-			<id>9</id>
+      <id>8</id>
       <type>Likert</type>
       <niveauer>6</niveauer>
-      <tekst>Teksten på siden er velformuleret</tekst>
+      <tekst>Indholdet på siden er opdateret og relevant</tekst>
     </spørgsmål>
     <spørgsmål>
-			<id>10</id>
+      <id>9</id>
       <type>Likert</type>
       <niveauer>6</niveauer>
-      <tekst>Teksten på siden er letlæselig</tekst>
+      <tekst>Designet af hjemmesiden er moderne og tidssvarende</tekst>
     </spørgsmål>
     <spørgsmål>
-			<id>11</id>
+      <id>10</id>
       <type>Likert</type>
       <niveauer>6</niveauer>
-      <tekst>Ordene i teksten på siden er bøjet korrekt</tekst>
+      <tekst>Det er nemt at finde kontaktinformationer på siden</tekst>
     </spørgsmål>
     <spørgsmål>
-			<id>12</id>
+      <id>11</id>
       <type>Likert</type>
       <niveauer>6</niveauer>
-      <tekst>Det er let at forstå teksten på siden</tekst>
+      <tekst>Informationen på siden er godt organiseret</tekst>
     </spørgsmål>
-		<spørgsmål>
-			<id>13</id>
-			<type>Likert</type>
-			<niveauer>6</niveauer>
-			<tekst>Teksten på siden er skrevet på en kringlet måde</tekst>
-		</spørgsmål>
-		<spørgsmål>
-			<id>14</id>
-			<type>Likert</type>
-			<niveauer>6</niveauer>
-			<tekst>Virksomheden er tillidsvækkende</tekst>
-		</spørgsmål>
-		<spørgsmål>
-			<id>15</id>
-			<type>Likert</type>
-			<niveauer>6</niveauer>
-			<tekst>De fleste kan godt lide denne hjemmeside</tekst>
-		</spørgsmål>
-    </spørgsmålsgruppe>
+    <spørgsmål>
+      <id>12</id>
+      <type>Likert</type>
+      <niveauer>6</niveauer>
+      <tekst>Jeg føler mig tryg ved at bruge hjemmesiden</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>13</id>
+      <type>Likert</type>
+      <niveauer>6</niveauer>
+      <tekst>Jeg oplever, at siden er pålidelig</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>14</id>
+      <type>Likert</type>
+      <niveauer>6</niveauer>
+      <tekst>Jeg har nemt ved at finde de ønskede produkter/tjenester på siden</tekst>
+    </spørgsmål>
+    <spørgsmål>
+      <id>15</id>
+      <type>Likert</type>
+      <niveauer>6</niveauer>
+      <tekst>Jeg vil anbefale denne hjemmeside til andre</tekst>
+    </spørgsmål>
+  </spørgsmålsgruppe>
 </spørgeskema>

@@ -6,10 +6,6 @@ window.onload = function () {
   if (!token) {
     window.location.href = "/login.html";
   }
-  // else {
-  //     // Hvis token findes, hentes besvarelserne
-  //     fetchResponses(token);
-  // }
 };
 
 async function fetchResponses(token) {
@@ -199,8 +195,14 @@ async function showStatistics() {
   let workCounts = countOccurrences(work);
 
   createChart(ageCounts, document.getElementById("ageChart").getContext("2d"));
-  createChart(genderCounts, document.getElementById("genderChart").getContext("2d"));
-  createChart(educationCounts, document.getElementById("educationChart").getContext("2d"));
+  createChart(
+    genderCounts,
+    document.getElementById("genderChart").getContext("2d")
+  );
+  createChart(
+    educationCounts,
+    document.getElementById("educationChart").getContext("2d")
+  );
 
   function createChart(data, canvas) {
     new Chart(canvas, {

@@ -62,6 +62,13 @@ form {
   padding: 10px;
 }
 
+#loginForm {
+  width: 700px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
 fieldset {
   background-color: rgb(242, 242, 242);
   padding: 0;
@@ -175,8 +182,39 @@ select {
   align-items: center;
 }
 
-.adminButtons {
+#loginForm label {
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+#loginForm input {
+  background-color: transparent;
+  width: 100%;
+  min-height: 50px;
+  padding-left: 20px;
+  border: 1px solid #c33afe;
+}
+
+#loginForm input:focus {
+  outline: none;
+  border-color: #c33afe;
+  border: solid 1px #c33afe;
+  box-shadow: 0 0 10px rgba(195, 58, 254, 0.5);
+}
+
+#loginForm button {
   margin: 20px;
+  background-color: #c33afe;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  padding: 16px 70px;
+  cursor: pointer;
+  font-size: 1.3rem;
+}
+
+.adminButtons {
+  margin: 20px 0 50px;
   background-color: #c33afe;
   border: none;
   border-radius: 50px;

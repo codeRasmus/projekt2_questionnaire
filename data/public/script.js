@@ -1,3 +1,4 @@
+// Ved indlæsning af DOM genereres en passende formular
 document.addEventListener("DOMContentLoaded", async () => {
   let runNr = localStorage.getItem("runNr");
   const page = window.location.pathname.split("/").pop();
@@ -31,6 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+// Funktion der sætter runNr i localStorage, hvis det ikke allerede findes
 function getPersistentId() {
   let runNr = localStorage.getItem("runNr");
   if (!runNr) {
@@ -40,6 +42,9 @@ function getPersistentId() {
   return runNr;
 }
 
+// Funktion som sørger for at brugeren har et runNr,
+// når der tilgåes en undersøgelsesside.
+// Hvis brugeren ikke har et, redirectes der til index.html
 async function validateRunNr(runNr, page) {
   console.log("📤 Validerer runNr:", runNr, "på siden:", page);
 
@@ -64,7 +69,7 @@ async function validateRunNr(runNr, page) {
   }
 }
 
-// Inser Demografi form
+// Funktion der dynamisk genererer Demografi formular, på baggrund af XML-dokumentet spørgeskema.xml
 function insertDemografiFormFromXML() {
   fetch("spørgeskema.xml")
     .then((response) => response.text())
@@ -72,21 +77,21 @@ function insertDemografiFormFromXML() {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlText, "text/xml");
 
-      // Select the first spørgesmålsgruppe (Demografi)
+      // Vælg første spørgesmålsgruppe (Demografi)
       const group = xmlDoc.querySelector("spørgsmålsgruppe");
       if (!group) return;
 
-      // Create form
+      // Form element laves
       const form = document.createElement("form");
       form.setAttribute("id", "demografiForm");
 
-      // Create fieldset
+      // Fieldset element laves
       const fieldset = document.createElement("fieldset");
 
-      // Array to store question containers
+      // Array til at indeholde question containers
       const questionContainers = [];
 
-      // Process questions
+      // Loop over spørgsmål og indsættes i DOM
       group.querySelectorAll("spørgsmål").forEach((question, index) => {
         const idElement = question.querySelector("id");
         const typeElement = question.querySelector("type");
@@ -98,18 +103,18 @@ function insertDemografiFormFromXML() {
         const type = typeElement.textContent;
         const labelText = labelTextElement.textContent;
 
-        // Create question container
+        // Lav question container
         const questionDiv = document.createElement("div");
         questionDiv.classList.add("question_container");
         if (index === 0) questionDiv.classList.add("active");
 
-        // Create label
+        // Lav label element
         const label = document.createElement("label");
         label.setAttribute("for", id);
         label.textContent = labelText;
         questionDiv.appendChild(label);
 
-        // Create input field based on type
+        // Lav input element baseret på type
         let inputElement;
         if (type === "integer") {
           inputElement = document.createElement("input");
@@ -147,7 +152,7 @@ function insertDemografiFormFromXML() {
         questionContainers.push(questionDiv);
       });
 
-      // Navigation buttons
+      // Lav knapper til at navigere mellem spørgsmål
       const buttonContainer = document.createElement("div");
       buttonContainer.classList.add("buttons");
 
@@ -161,9 +166,9 @@ function insertDemografiFormFromXML() {
       nextBtn.textContent = "Næste";
 
       const submitButton = document.createElement("button");
-      // submitButton.setAttribute("type", "submit");
+
       submitButton.textContent = "Send";
-      submitButton.style.display = "none"; // Initially hidden
+      submitButton.style.display = "none"; // Ikke vist fra start
       submitButton.addEventListener("click", submitUser);
 
       buttonContainer.appendChild(prevBtn);
@@ -175,6 +180,7 @@ function insertDemografiFormFromXML() {
 
       let currentIndex = 0;
 
+      // Funktion som skiftet mellem spørgsmål
       function showQuestion(index) {
         questionContainers.forEach((q, i) => {
           q.classList.toggle("active", i === index);
@@ -182,7 +188,7 @@ function insertDemografiFormFromXML() {
 
         prevBtn.style.display = index === 0 ? "none" : "inline-block";
 
-        // If last question, show submit button and hide "Next"
+        // Hvis det er sidste spørgsmål vises submitButton
         if (index === questionContainers.length - 1) {
           nextBtn.style.display = "none";
           submitButton.style.display = "inline-block";
@@ -210,7 +216,7 @@ function insertDemografiFormFromXML() {
     .catch((error) => console.error("Error loading XML:", error));
 }
 
-// Insert Undersøgelse form
+// Funktion der dynamisk genererer Undersøgelse formular, på baggrund af XML-dokumentet spørgeskema.xml
 function insertUndersøgelseForm() {
   fetch("spørgeskema.xml")
     .then((response) => response.text())
@@ -219,18 +225,23 @@ function insertUndersøgelseForm() {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlText, "text/xml");
 
+      // Valg af spørgsmålgruppe 2 (Undersøgelse)
       const group = xmlDoc.querySelectorAll("spørgsmålsgruppe")[1];
       if (!group) return;
 
+      // Lav form element
       const form = document.createElement("form");
       form.setAttribute("id", "surveyForm");
 
+      // Lav fieldset element
       const fieldset = document.createElement("fieldset");
       const questions = Array.from(group.querySelectorAll("spørgsmål"));
       shuffleArray(questions);
 
+      // Array til question constainers
       const questionContainers = [];
 
+      // Loop over spørgsmål og indsættes i DOM
       questions.forEach((question, index) => {
         const idElement = question.querySelector("id");
         const typeElement = question.querySelector("type");
@@ -249,16 +260,18 @@ function insertUndersøgelseForm() {
             labelTextElement.textContent +
             "</i>";
         }
-
+        // Lav question container
         const questionDiv = document.createElement("div");
         questionDiv.classList.add("question_container");
         if (index === 0) questionDiv.classList.add("active");
 
+        // Lav label element
         const label = document.createElement("label");
         label.setAttribute("for", id);
         label.innerHTML = labelText;
         questionDiv.appendChild(label);
 
+        // Lav input element ud fra type
         let inputElement;
         if (type === "skala") {
           inputElement = document.createElement("input");
@@ -318,6 +331,7 @@ function insertUndersøgelseForm() {
 
       let currentIndex = 0;
 
+      // Funktion til at skifte mellem spørgsmål
       function showQuestion(index) {
         questionContainers.forEach((q, i) => {
           q.classList.toggle("active", i === index);
@@ -334,6 +348,7 @@ function insertUndersøgelseForm() {
         }
       }
 
+      // Funktion der tjekker om alle spørgsmål i formularen er besvarede
       function checkAllQuestionsAnswered() {
         const allAnswered = questionContainers.every((q) => {
           const input = q.querySelector("input, textarea");
@@ -364,7 +379,7 @@ function insertUndersøgelseForm() {
         q.addEventListener("input", checkAllQuestionsAnswered);
       });
 
-      // Attach submitSurvey to submit button
+      // Ved klik på submitButton startes submitSurvey funktionen
       submitButton.addEventListener("click", submitSurvey);
 
       showQuestion(currentIndex);
@@ -372,7 +387,7 @@ function insertUndersøgelseForm() {
     .catch((error) => console.error("Error loading XML:", error));
 }
 
-// Shuffle function to randomize the order of questions
+// Shuffle funktion der giver en vilkårlig rækkefølge af spørgsmålene
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -380,8 +395,9 @@ function shuffleArray(array) {
   }
 }
 
+// Funktion til at gemme Demografi oplysningerne
 async function submitUser(event) {
-  event.preventDefault(); // Prevent standard GET request
+  event.preventDefault();
   console.log("Submitting user data...");
   const runNr = getPersistentId();
   const userData = {
@@ -403,7 +419,6 @@ async function submitUser(event) {
     });
 
     if (response.ok) {
-      // Håndter redirect ved at følge serverens anvisning
       nextPage();
     } else {
       console.error("Error: Server responded with status", response.status);
@@ -413,8 +428,9 @@ async function submitUser(event) {
   }
 }
 
+// Funktion til at gemme Undersøgelse
 async function submitSurvey(event) {
-  event.preventDefault(); // Forhindrer standard formular-submission
+  event.preventDefault();
 
   const runNr = getPersistentId();
   const page = window.location.pathname.split("/").pop();
@@ -448,6 +464,7 @@ async function submitSurvey(event) {
   }
 }
 
+// Navigation til næste side, tjekker localStorage for om siden tidligere har været besøgt
 function nextPage() {
   let pagesArr = [
     "page1.html",
@@ -467,6 +484,6 @@ function nextPage() {
     visitedPages.push(randomPage);
     localStorage.setItem("visitedPages", JSON.stringify(visitedPages));
 
-    window.location.href = randomPage; // Ingen runNr i URL!
+    window.location.href = randomPage;
   }
 }
